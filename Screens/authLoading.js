@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, AsyncStorage } from 'react-native';
 import styled from 'styled-components';
 
 const AuthLoadingWrapper = styled(View)`
@@ -14,7 +14,13 @@ const AuthLoadingText = styled(Text)`
   color: black;
 `;
 
-function AuthLoading() {
+function AuthLoading({ navigation }) {
+  React.useEffect(() => {
+    AsyncStorage.getItem('token').then((value) => {
+      navigation.navigate(value ? 'Conversations' : 'Login');
+    });
+  }, [navigation]);
+
   return (
     <AuthLoadingWrapper>
       <AuthLoadingText>Loading...</AuthLoadingText>

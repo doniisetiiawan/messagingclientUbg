@@ -16,7 +16,7 @@ function Settings({ navigation }) {
       <Button
         title="Log out"
         onPress={() => {
-          AsyncStorage.removeItem('token').then(() => navigation.navigate('AuthLoading'));
+          AsyncStorage.removeItem('token').then(() => navigation.navigate('Login'));
         }}
       />
     </SettingsWrapper>

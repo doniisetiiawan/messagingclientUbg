@@ -8,8 +8,10 @@ import Conversations from './Screens/Conversations';
 import Conversation from './Screens/conversation';
 import Settings from './Screens/settings';
 import AuthLoading from './Screens/authLoading';
+import Login from './Screens/login';
 
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 function ConversationsStack() {
   return (
@@ -33,11 +35,9 @@ function ConversationsStack() {
   );
 }
 
-const Tab = createBottomTabNavigator();
-
-function AppContainer() {
+function TabNavigator() {
   return (
-    <NavigationContainer>
+    <>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ color, size }) => {
@@ -53,7 +53,6 @@ function AppContainer() {
               }-star`;
             }
 
-            // You can return any component that you like here!
             return (
               <Ionicons
                 name={iconName}
@@ -77,6 +76,30 @@ function AppContainer() {
           component={Settings}
         />
       </Tab.Navigator>
+    </>
+  );
+}
+
+function AppContainer() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="AuthLoading"
+          component={AuthLoading}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Conversations"
+          component={TabNavigator}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
