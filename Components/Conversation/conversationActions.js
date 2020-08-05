@@ -2,8 +2,10 @@ import React from 'react';
 import { Platform, View } from 'react-native';
 import styled from 'styled-components';
 import { Ionicons } from '@expo/vector-icons';
+import { useMutation } from '@apollo/client';
 import TextInput from '../TextInput/textInput';
 import Button from '../Button/button';
+import { SEND_MESSAGE } from '../../constants';
 
 const ConversationActionsWrapper = styled(View)`
   width: 100%;
@@ -15,7 +17,8 @@ const ConversationActionsWrapper = styled(View)`
   justify-content: space-around;
 `;
 
-function ConversationActions() {
+function ConversationActions({ userName }) {
+  const [sendMessage] = useMutation(SEND_MESSAGE);
   const [message, setMessage] = React.useState('');
 
   return (
@@ -30,6 +33,12 @@ function ConversationActions() {
       <Button
         width={20}
         padding={10}
+        onPress={() => {
+          sendMessage({
+            variables: { to: userName, text: message },
+          });
+          setMessage('');
+        }}
         title={(
           <Ionicons
             name={`${

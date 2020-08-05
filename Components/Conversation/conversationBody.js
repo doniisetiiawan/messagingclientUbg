@@ -6,6 +6,7 @@ import {
   FlatList,
 } from 'react-native';
 import Message from '../Message/message';
+import { MESSAGE_ADDED } from '../../constants';
 
 const ConversationBodyWrapper = styled(ScrollView)`
   width: 100%;
@@ -18,7 +19,35 @@ const MessagesList = styled(FlatList)`
   width: 100%;
 `;
 
-function ConversationBody({ messages }) {
+function ConversationBody({
+  subscribeToMore,
+  userName,
+  messages,
+}) {
+  React.useEffect(() => {
+    subscribeToMore({
+      document: MESSAGE_ADDED,
+      variables: { userName },
+      updateQuery: (previous, { subscriptionData }) => {
+        if (!subscriptionData.data) {
+          return previous;
+        }
+        const { messageAdded } = subscriptionData.data;
+
+        return {
+          ...previous,
+          conversation: {
+            ...previous.conversation,
+            messages: [
+              ...previous.conversation.messages,
+              messageAdded,
+            ],
+          },
+        };
+      },
+    });
+  }, []);
+
   return (
     <ConversationBodyWrapper>
       <MessagesList
