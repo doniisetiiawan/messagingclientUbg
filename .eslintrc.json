@@ -28,6 +28,7 @@
     "no-prototype-builtins": "off",
     "radix": "off",
     "no-multi-assign": "off",
+    "react/prop-types": "off",
     "react/jsx-one-expression-per-line": "off"
   }
 }
