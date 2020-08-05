@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FlatList, Text, View } from 'react-native';
+import { useQuery } from '@apollo/client';
+import { GET_CONVERSATIONS } from '../constants';
 import ConversationItem from '../Components/Conversation/conversationItem';
 
 const ConversationsWrapper = styled(View)`
@@ -19,10 +21,28 @@ const ConversationsText = styled(Text)`
   color: black;
 `;
 
-function Conversations() {
+function Conversations({ navigation }) {
+  const { loading, error, data } = useQuery(
+    GET_CONVERSATIONS,
+  );
+  if (loading || error) {
+    return (
+      <ConversationsText>Loading...</ConversationsText>
+    );
+  }
+
   return (
     <ConversationsWrapper>
-      <ConversationItem />
+      <ConversationsList
+        data={data.conversations}
+        keyExtractor={(item) => String(item.id)}
+        renderItem={({ item }) => (
+          <ConversationItem
+            item={item}
+            navigation={navigation}
+          />
+        )}
+      />
     </ConversationsWrapper>
   );
 }

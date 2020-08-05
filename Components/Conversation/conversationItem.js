@@ -1,6 +1,9 @@
 import React from 'react';
 import {
-  Platform, Text, TouchableOpacity, View,
+  Platform,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import styled from 'styled-components';
@@ -24,13 +27,17 @@ const UserName = styled(Text)`
 
 const Message = styled(Text)`
   flex-wrap: wrap;
-  max-width: 95%;
+  max-width: 88%;
   font-size: 14px;
 `;
 
-function ConversationItem() {
+function ConversationItem({ item, navigation }) {
   return (
-    <ConversationItemWrapper>
+    <ConversationItemWrapper
+      onPress={() => navigation.navigate('Conversation', {
+        userName: item.userName,
+      })}
+    >
       <ThumbnailWrapper>
         <Ionicons
           name={`${
@@ -41,8 +48,8 @@ function ConversationItem() {
         />
       </ThumbnailWrapper>
       <View>
-        <UserName>item.userName</UserName>
-        <Message>{'item.messages'[0].text}</Message>
+        <UserName>{item.userName}</UserName>
+        <Message>{item.messages[0].text}</Message>
       </View>
     </ConversationItemWrapper>
   );

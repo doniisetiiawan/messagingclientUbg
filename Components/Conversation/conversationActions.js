@@ -1,16 +1,11 @@
 import React from 'react';
-import {
-  Platform,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { Platform, View } from 'react-native';
 import styled from 'styled-components';
 import { Ionicons } from '@expo/vector-icons';
 import TextInput from '../TextInput/textInput';
 import Button from '../Button/button';
 
-const ConversationActionsWrapper = styled(
-  KeyboardAvoidingView,
-)`
+const ConversationActionsWrapper = styled(View)`
   width: 100%;
   background-color: #ccc;
   padding: 2%;
@@ -24,12 +19,7 @@ function ConversationActions() {
   const [message, setMessage] = React.useState('');
 
   return (
-    <ConversationActionsWrapper
-      keyboardVerticalOffset={
-        Platform.OS === 'ios' ? 190 : 140
-      }
-      behavior="padding"
-    >
+    <ConversationActionsWrapper>
       <TextInput
         width={75}
         marginBottom={0}
